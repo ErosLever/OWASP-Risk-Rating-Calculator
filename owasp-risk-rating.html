@@ -359,7 +359,7 @@ div.section{
 	function setStatus(status){
 		var status = status.replace(/^#/,'').split(",").map(function(n){return parseInt(n)});
 		if(status.length != 16)
-			return;
+			status = [1,1,0,2,1,1,1,1,2,1,1,1,1,1,2,3];
 		var selects = document.querySelectorAll("select");
 		Array.prototype.map.call( selects, function(elm,index){
 			elm.value = status[index];
