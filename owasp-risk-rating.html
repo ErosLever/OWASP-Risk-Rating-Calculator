@@ -318,7 +318,13 @@ div.section{
 					<th>Adjust score</th>
 					<th>Risk</th>
 				</tr><tr>
-					<td>Technical&nbsp;&nbsp;&nbsp;<input id="adjust" type="range" min="0" max="1" value="0.5" title="0.5" step="0.05" onchange="this.title=this.value;globalUpdate();" />&nbsp;&nbsp;&nbsp;Business</td>
+					<td>
+						Technical
+						&nbsp;&nbsp;&nbsp;
+						<input id="adjust" type="range" min="0" max="1" value="0.5" title="0.5" step="0.05" />
+						&nbsp;&nbsp;&nbsp;
+						Business
+					</td>
 					<td id=risk>NOTE</td>
 				</tr>
 			</table>
@@ -327,6 +333,11 @@ div.section{
 	<div style="clear:both">&nbsp;</div>
 </div>
 <script type="text/javascript">
+	function adjustScore(elm){
+		elm.title = elm.value;
+		globalUpdate();
+	}
+	document.getElementById("adjust").onchange = adjustScore;
 	var colors = ['#5f5','#ff5','#f55']
 	var scoreColors = ['#5ff','#5f5','#ff5','#f55','#b02']
 	function value2text(value){
