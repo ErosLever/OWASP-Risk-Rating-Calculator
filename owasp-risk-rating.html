@@ -372,14 +372,17 @@ div.section{
 		status += ','+parseInt(100*parseFloat(document.getElementById('adjust').value));
 		return status;
 	}	
+	function clamp(num,min,max){
+		return Math.min(Math.max(num, min), max);
+	}
 	function setStatus(status){
 		var status = status.replace(/^#/,'').split(",").map(function(n){return parseInt(n)});
 		if(status.length != 17)
 			status = [1,1,0,2,1,1,1,1,2,1,1,1,1,1,2,3,50];
-		document.getElementById('adjust').value = status.pop() / 100.0;
+		document.getElementById('adjust').value = clamp(status.pop(),0,100) / 100.0;
 		var selects = document.querySelectorAll("select");
 		Array.prototype.map.call( selects, function(elm,index){
-			elm.value = status[index];
+			elm.value = clamp(status[index],0,10);
 			elm.onchange();
 		});
 	}
