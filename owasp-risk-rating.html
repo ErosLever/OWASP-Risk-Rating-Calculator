@@ -454,10 +454,10 @@ div.section{
     status = status.map(function(x,i){return clamp(x, 0, i<16 ? 9 : 100)})
     if(status.length != 17)
       status = [1,1,0,2,1,1,1,1,2,1,1,1,1,1,2,3,50];
-    document.getElementById('adjust').value = clamp(status.pop(),0,100) / 100.0;
+    document.getElementById('adjust').value = status.pop() / 100.0;
     var selects = document.querySelectorAll("select");
     Array.prototype.map.call( selects, function(elm,index){
-      elm.value = clamp(status[index],0,9);
+      elm.value = status[index];
       elm.onchange();
     });
   }
@@ -467,11 +467,11 @@ div.section{
       var updateFunc = function(){
         this.parentNode.style.backgroundColor = colors[ val2score(this.value) ];
         var selects = document.querySelectorAll("#tr_" + name + " select");
-        var value = Array.prototype.reduce.call( selects, function(sum,elm){
+        var value = Math.round(Array.prototype.reduce.call( selects, function(sum,elm){
           return sum + parseInt(elm.value);
-        },0) / parseFloat(selects.length);
+        },0) * 10 / selects.length) / 10.0;
         var elm = document.getElementById(name);
-        elm.textContent = value;
+        elm.textContent = value.toFixed(1);
         elm.style.backgroundColor = colors[ val2score(value) ];
         elm.nextSibling.style.backgroundColor = colors[ val2score(value) ];
         elm.nextSibling.textContent = value2text(value);
@@ -497,6 +497,11 @@ div.section{
       var th = tr.previousElementSibling.children[i];
       th.title = x.title;
     });
+  }
+  document.getElementById('vector').onpaste = function(ev){
+  	var vector = ev.clipboardData.getData('text')
+  	setStatus(vector);
+  	return ev.preventDefault();
   }
 </script>
 </body>
